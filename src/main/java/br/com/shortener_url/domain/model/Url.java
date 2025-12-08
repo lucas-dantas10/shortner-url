@@ -31,8 +31,6 @@ public class Url {
     }
 
     private String generateShortcode(long counter, String salt) {
-        Hashids hashids = new Hashids(salt, MIN_LENGTH_HASH);
-
-        return hashids.encode(counter);
+        return new Hashids(salt, MIN_LENGTH_HASH).encode(counter);
     }
 }
