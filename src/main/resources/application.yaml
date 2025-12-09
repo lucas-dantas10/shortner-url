@@ -5,3 +5,10 @@ spring:
     keyspace-name: shortner_url
     schema-action: create_if_not_exists
     local-datacenter: dc1
+
+  data:
+    redis:
+      port: 6379
+      host: localhost
+redis:
+  init-counter: 14000000
