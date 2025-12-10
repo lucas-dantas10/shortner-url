@@ -5,7 +5,7 @@ import br.com.shortener_url.infra.adapter.in.rest.dto.CreateShortenResponse;
 
 public class UrlMapper {
 
-    public static CreateShortenResponse toCreateShortenResponse(Url url) {
-        return new CreateShortenResponse("http://localhost/" + url.getShortcode());
+    public static CreateShortenResponse toCreateShortenResponse(String baseUrl, Url url) {
+        return new CreateShortenResponse(baseUrl + url.getShortcode());
     }
 }

@@ -5,6 +5,7 @@ import br.com.shortener_url.domain.usecase.CreateShortUrlUseCase;
 import br.com.shortener_url.infra.adapter.in.rest.dto.CreateShortenRequest;
 import br.com.shortener_url.infra.adapter.in.rest.dto.CreateShortenResponse;
 import br.com.shortener_url.infra.adapter.in.rest.mapper.UrlMapper;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +22,11 @@ public class CreateShortUrlAction {
     private final CreateShortUrlUseCase createShortUrlUseCase;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CreateShortenResponse> create(@RequestBody CreateShortenRequest createShortenRequest) {
+    public ResponseEntity<CreateShortenResponse> create(
+            @RequestBody CreateShortenRequest createShortenRequest,
+            HttpServletRequest request) {
         Url url = createShortUrlUseCase.execute(createShortenRequest.longUrl());
 
-        return ResponseEntity.ok(UrlMapper.toCreateShortenResponse(url));
+        return ResponseEntity.ok(UrlMapper.toCreateShortenResponse(request.getScheme(), url));
     }
 }
