@@ -11,4 +11,5 @@ spring:
       port: 6379
       host: localhost
 redis:
+  key-counter: my_counter
   init-counter: 14000000
