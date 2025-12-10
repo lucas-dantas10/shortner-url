@@ -7,6 +7,7 @@ import br.com.shortener_url.infra.adapter.in.rest.dto.CreateShortenResponse;
 import br.com.shortener_url.infra.adapter.in.rest.mapper.UrlMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,11 @@ public class CreateShortUrlAction {
             HttpServletRequest request) {
         Url url = createShortUrlUseCase.execute(createShortenRequest.longUrl());
 
-        return ResponseEntity.ok(UrlMapper.toCreateShortenResponse(request.getScheme(), url));
+        String baseUrl = request.getRequestURL()
+                .toString()
+                .replace(request.getRequestURI(), "");
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(UrlMapper.toCreateShortenResponse(baseUrl, url));
     }
 }
