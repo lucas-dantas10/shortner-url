@@ -5,11 +5,14 @@ spring:
     keyspace-name: shortner_url
     schema-action: create_if_not_exists
     local-datacenter: dc1
-
   data:
     redis:
       port: 6379
       host: localhost
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: America/Sao_Paulo
+    property-naming-strategy: com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 redis:
   key-counter: my_counter
   init-counter: 14000000
