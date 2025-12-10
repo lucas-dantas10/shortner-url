@@ -20,8 +20,6 @@ public class CreateShortUrlUseCase {
     public Url execute(String longUrl) {
         Url url = new Url(longUrl, counterPort.increment(), urlConfigProvider.getSalt());
 
-        urlRepository.save(url);
-
-        return url;
+        return urlRepository.save(url);
     }
 }
