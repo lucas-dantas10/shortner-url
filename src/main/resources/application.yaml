@@ -16,3 +16,5 @@ spring:
 redis:
   key-counter: my_counter
   init-counter: 14000000
+hash:
+  salt: "MyApplicationSalt"

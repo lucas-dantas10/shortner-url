@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Table("url")
-public class Url {
+public class UrlJpaEntity {
 
     @PrimaryKey("shortcode")
-    private Long id;
+    private String id;
 
     @Column("long_url")
     private String longUrl;
