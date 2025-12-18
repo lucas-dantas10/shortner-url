@@ -12,6 +12,12 @@ public class Url {
     private String longUrl;
     private LocalDateTime createdAt;
 
+    public Url(String shortcode, String longUrl, LocalDateTime createdAt) {
+        this.shortcode = shortcode;
+        this.longUrl = longUrl;
+        this.createdAt = createdAt;
+    }
+
     public Url(String longUrl, long counter, String salt) {
         this.shortcode = this.generateShortcode(counter, salt);
         this.longUrl = longUrl;

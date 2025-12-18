@@ -5,6 +5,8 @@ import br.com.shortener_url.domain.ports.repository.UrlRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class UrlRepositoryImpl implements UrlRepository {
@@ -20,5 +22,14 @@ public class UrlRepositoryImpl implements UrlRepository {
         repository.save(urlJpaEntity);
 
         return url;
+    }
+
+    public Url findByShortUrl(String shortUrl) {
+        Optional<UrlJpaEntity> urlJpaEntity = repository.findById(shortUrl);
+
+        return new Url(
+                urlJpaEntity.get().getId(),
+                urlJpaEntity.get().getLongUrl(),
+                urlJpaEntity.get().getCreatedAt());
     }
 }
