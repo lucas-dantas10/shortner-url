@@ -1,13 +1,12 @@
 services:
   app:
     build: .
-    container_name: shortner_url
     restart: always
+    deploy:
+      replicas: 4
     depends_on:
       - cassandra
       - redis
-    ports:
-      - "8080:8080"
     environment:
       SPRING_CASSANDRA_CONTACT_POINTS: cassandra
     networks:
@@ -41,6 +40,16 @@ services:
     restart: always
     networks:
       - app-network
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+    depends_on:
+      - app
 
 volumes:
   cassandra_data:

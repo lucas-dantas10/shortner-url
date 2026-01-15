@@ -18,5 +18,3 @@ redis:
   init-counter: 14000000
 hash:
   salt: "MyApplicationSalt"
-server:
-  port: 8080
