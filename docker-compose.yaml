@@ -1,15 +1,35 @@
 services:
+  app:
+    build: .
+    container_name: shortner_url
+    restart: always
+    depends_on:
+      - cassandra
+      - redis
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_CASSANDRA_CONTACT_POINTS: cassandra
+    networks:
+      - app-network
   cassandra:
     image: cassandra:5.0
     container_name: cassandra
     ports:
       - "9042:9042"
+    healthcheck:
+      test: [ "CMD", "cqlsh", "-e", "DESCRIBE keyspaces" ]
+      interval: 15s
+      timeout: 10s
+      retries: 10
     environment:
       - CASSANDRA_CLUSTER_NAME=dev-cluster
       - CASSANDRA_NUM_TOKENS=8
       - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
     volumes:
       - cassandra_data:/var/lib/cassandra
+    networks:
+      - app-network
   redis:
     image: redis
     container_name: redis
@@ -19,7 +39,12 @@ services:
     volumes:
       - redis_data:/data
     restart: always
+    networks:
+      - app-network
 
 volumes:
   cassandra_data:
   redis_data:
+networks:
+  app-network:
+    driver: bridge

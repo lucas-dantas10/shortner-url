@@ -25,7 +25,11 @@ public class RedisCounterAdapter implements CounterPort {
 
     @PostConstruct
     public void init() {
-        redisTemplate.opsForValue().setIfAbsent(keyCounter, counter);
+        try {
+            redisTemplate.opsForValue().setIfAbsent(keyCounter, counter);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
     }
 
     public Long increment() {

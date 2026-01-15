@@ -1,14 +1,14 @@
 spring:
   cassandra:
-    contact-points: localhost
+    contact-points: cassandra
     port: 9042
     keyspace-name: shortner_url
     schema-action: create_if_not_exists
     local-datacenter: dc1
   data:
     redis:
+      host: redis
       port: 6379
-      host: localhost
   jackson:
     date-format: yyyy-MM-dd
     time-zone: America/Sao_Paulo
@@ -18,3 +18,5 @@ redis:
   init-counter: 14000000
 hash:
   salt: "MyApplicationSalt"
+server:
+  port: 8080
